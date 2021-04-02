@@ -1,0 +1,106 @@
+//task1 :
+function ValidTime (hours0,min0){
+    if ((hours0<0)||(hours0>=25)||(min0<0)||(min0>60)){
+        return(false);
+    }
+    else return(true);
+}
+//task2 :
+function timeIncrement(hours, min, interval){
+    const newMin = (min + interval) % 60; // остаток от деления на 60
+    const newHours = (hours + Math.floor((min + interval)/60)) % 24;  // Тут мы используем библиотечную функцию Math.floor для округления в меньшую сторону
+    return `${newHours}:${newMin}`;  // составляем строку из полученных значений
+}
+//task3 :seasons
+console.log("задание1: определить, валидно ли число");
+console.log("результаты:")
+console.log(ValidTime(12,34));
+console.log(ValidTime(14,64));
+console.log(ValidTime(-12,34));
+console.log(" ");
+console.log("задание2: добавить минуты")
+console.log("результаты:")
+console.log(timeIncrement(13, 30, 40));
+console.log(timeIncrement(23, 30, 40));
+console.log(timeIncrement(10, 0, 320));
+console.log(" ");
+console.log("задание3:");
+    const readline = require('readline');
+    const rl = readline.createInterface({
+        input: process.stdin,
+        output: process.stdout
+    });
+    rl.question('введите номер месяца:', (answer) => {
+        switch (answer) {
+            case "1":
+            case"2":
+            case"12": {
+                console.log("зима");
+                break;
+            }
+            case "3":
+            case "4":
+            case"5": {
+                console.log("весна");
+                break;
+            }
+            case "6":
+            case "7":
+            case"8": {
+                console.log("лето");
+                break;
+            }
+            case "9":
+            case "10":
+            case "11": {
+                console.log("осень");
+                break;
+            }
+            default: {
+                console.log("неверно");
+            }
+        }
+
+       console.log(" ");
+console.log("задание4:");
+        rl.question('введите кол-во дней:', (answer) => {
+console.log(skl(answer));
+
+        function skl(answer) {
+            var ost = answer % 10;
+            if (ost == 1) return "день";
+            else if (ost >= 2 && ost <= 4) return "дня";
+            else return "дней";
+        }
+
+
+console.log(" ");
+console.log("задание5:");
+        rl.question('введите конечное число суммы:', (answer) => {
+            console.log(sum(answer));
+function sum(answer) {
+    var result=0;
+    var count;
+    for (count=0;count<=answer;count++){
+        result+=count;
+    }
+    return result;
+}
+console.log(" ");
+console.log("задание6: таблица умножения");
+rl.question('введите число:', (answer) => {
+    console.log(table(answer));
+function table(answer){
+    var res = [];
+    var z = answer.split(' ');
+    for (i = 1; i <= 10; i++) {
+        res[i - 1] = answer * i;
+    }
+    for (i = 1; i <= 10; i++) {
+        console.log(z[0], '*', i, '=', res[i - 1]);
+    }
+}
+});
+});
+});
+});
