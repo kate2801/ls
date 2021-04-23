@@ -1,0 +1,97 @@
+console.log(getWords('Прохожу курс в компании #senla, по #javascript')); // – функция должна вернуть [senla, ’ javascript’];
+console.log('\n');
+console.log(normalizeWords(['web', 'script', 'JavaScript', 'script', 'programming'])); //должна вернуть строку: "web, javascript, script, programming"
+//(все слова в нижнем регистре, разделяются запятой и пробелом, нет повторяющихся слов)
+
+function getWords(tweet) {
+    var resultArray = [];
+    var arrayOfString = [];
+
+    arrayOfString = tweet.split(/[.,\/ -]/);
+    for (var i = 0; i < arrayOfString.length; i++) {
+        if (arrayOfString[i].substr(0, 1) === '#') {
+            arrayOfString[i] = arrayOfString[i].slice(1);
+            resultArray.push(arrayOfString[i]);
+        }
+    }
+    return resultArray;
+}
+
+function normalizeWords(arrayOfWords) {
+    let uniqueArray = unique(arrayOfWords);
+    let stringFromArray = uniqueArray.join(', ');
+    return stringFromArray.toLowerCase();
+}
+
+function unique(arr) {
+    let result = [];
+
+    for (let str of arr) {
+        if (!result.includes(str)) {
+            result.push(str);
+        }
+    }
+
+    return result;
+}
+
+var phoneBook = [];
+function addressBook (command) {
+// команда add
+    if (command.split(' ')[0] === 'ADD' ){
+        var name = command.split(' ')[1];
+        var phones = (command.split(' ')[2]).split(',');
+        var isPresent = false;
+        for(let i=0; i<phoneBook.length; i++){
+            if (phoneBook[i] .split(': ')[0] === name){
+                isPresent = true;
+                phoneBook[i] = phoneBook[i] + ", " + normalizeWords(phones);
+            }
+        }
+        if (!isPresent) {
+            phoneBook.push(name + ": " + normalizeWords(phones) );
+        }
+    }
+
+// команда remove
+    else if (command.split(' ')[0] ==='REMOVE_PHONE' ){
+        var phone = (command.split(' ')[1]);
+        for (let j=0; j<phoneBook.length; j++){
+            var currentPhones = phoneBook[j].split(': ')[1].split(', ');
+            for (let i=0; i<currentPhones.length; i++){
+                if(currentPhones[i] === phone) {
+                    currentPhones.splice(i, 1);
+                    phoneBook[j] = phoneBook[j].split(': ')[0] + ": " + normalizeWords(currentPhones);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+// команда show
+    if (command.split(' ')[0] === 'SHOW'){
+        phoneBook.sort(function(a, b){
+            if(a.split(': ')[0] < b.split(': ')[0]) { return -1; }
+            if(a.split(': ')[0] > b.split(': ')[0]) { return 1; }
+            return 0;
+        });
+
+        for (let i=0; i<phoneBook.length; i++){
+            if (phoneBook[i].split(': ')[1] == ""){
+                phoneBook.splice(i, 1);
+            }
+        }
+        return phoneBook;
+    }
+}
+
+console.log('\n');
+addressBook('ADD Ivan 223232');
+addressBook('ADD Ivan 555-10-01,555-10-03');
+console.log( addressBook('SHOW') );
+addressBook('REMOVE_PHONE 555-10-01');
+addressBook('ADD Alex 544545');
+console.log( addressBook('SHOW') );
+addressBook('REMOVE_PHONE 544545');
+console.log( addressBook('SHOW') );
